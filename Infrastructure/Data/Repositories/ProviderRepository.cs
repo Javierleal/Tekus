@@ -6,6 +6,7 @@ namespace Infrastructure.Data.Repositories
     {
         public ProviderRepository(EFContext dbContext) : base(dbContext)
         {
+
         }
     }
 }

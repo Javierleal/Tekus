@@ -2,8 +2,7 @@
 
 namespace Infrastructure.Data.Repositories
 {
-    public class UserRepository : RepositoryBase<User>
-        , IUserRepository
+    public class UserRepository : RepositoryBase<User> , IUserRepository
     {
         public UserRepository(EFContext dbContext) : base(dbContext)
         {

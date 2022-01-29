@@ -9,14 +9,12 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Data.Repositories
 {
-    public class RepositoryBase<T> : IAsyncRepository<T> where T : BaseEntity
+    public class RepositoryBase<T> :  IAsyncRepository<T> where T : BaseEntity
     {
         private readonly DbSet<T> _dbSet;
 
         public RepositoryBase(EFContext dbContext)
         {
-            var result = dbContext.Database.CanConnect();
-
             _dbSet = dbContext.Set<T>();
         }
 
