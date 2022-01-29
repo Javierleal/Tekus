@@ -1,5 +1,4 @@
 ﻿using API.Services.Users;
-using Domain.Departments;
 using Domain.Interfaces;
 using Domain.Users;
 using Infrastructure.Data;
@@ -12,13 +11,6 @@ namespace API.Extensions
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddRepositories(this IServiceCollection services)
-        {
-            return services
-                .AddScoped(typeof(IAsyncRepository<>), typeof(RepositoryBase<>))
-                .AddScoped<IUserRepository, UserRepository>()
-                .AddScoped<IDepartmentRepository, DepartmentRepository>();
-        }
 
         public static IServiceCollection AddUnitOfWork(this IServiceCollection services)
         {

@@ -1,7 +1,11 @@
 ﻿using API.DTOs.Users;
+using API.Helpers;
 using API.Services.Users;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace API.Controllers
@@ -12,32 +16,33 @@ namespace API.Controllers
     {
         private readonly UserService _service;
         private readonly ILogger<UserController> _logger;
+        private readonly IJwtAuthManager _jwtAuthManager;
 
         public UserController(ILogger<UserController> logger
-            , UserService service)
+            , UserService service, IJwtAuthManager jwtAuthManager)
         {
             _service = service;
             _logger = logger;
+            _jwtAuthManager = jwtAuthManager;
         }
 
+        [AllowAnonymous]
+        [HttpPost("authenticate")]
+        public IActionResult Authenticate(AuthenticateRequest model)
+        {
+            var response = _service.Authenticate(model, _jwtAuthManager);
+
+            if (response == null)
+                return Unauthorized();
+
+            return Ok(response);
+        }
+
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> Get([FromQuery] GetUserRequest request)
         {
             var users = await _service.SearchAsync(request);
-            return Ok(users);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Add([FromBody] AddUserRequest request)
-        {
-            var users = await _service.AddNewAsync(request);
-            return Ok(users);
-        }
-
-        [HttpPost("payslips")]
-        public async Task<IActionResult> AddPayslip([FromBody] AddPayslipRequest request)
-        {
-            var users = await _service.AddUserPayslipAsync(request);
             return Ok(users);
         }
     }
