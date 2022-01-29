@@ -18,8 +18,7 @@ namespace API.Controllers
         private readonly ILogger<UserController> _logger;
         private readonly IJwtAuthManager _jwtAuthManager;
 
-        public UserController(ILogger<UserController> logger
-            , UserService service, IJwtAuthManager jwtAuthManager)
+        public UserController(ILogger<UserController> logger, UserService service, IJwtAuthManager jwtAuthManager)
         {
             _service = service;
             _logger = logger;
@@ -28,9 +27,9 @@ namespace API.Controllers
 
         [AllowAnonymous]
         [HttpPost("authenticate")]
-        public IActionResult Authenticate(AuthenticateRequest model)
+        public async Task<IActionResult> Authenticate(AuthenticateRequest model)
         {
-            var response = _service.Authenticate(model, _jwtAuthManager);
+            var response = await _service.Authenticate(model, _jwtAuthManager);
 
             if (response == null)
                 return Unauthorized();
@@ -41,7 +40,7 @@ namespace API.Controllers
         [Authorize]
         [HttpGet]
         public async Task<IActionResult> Get([FromQuery] GetUserRequest request)
-        {
+        { 
             var users = await _service.SearchAsync(request);
             return Ok(users);
         }

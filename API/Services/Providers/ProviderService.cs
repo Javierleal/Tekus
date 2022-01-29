@@ -43,5 +43,34 @@ namespace API.Services.Providers
             return providerDTOs;
         }
 
+
+        /// <summary>
+        /// Agregar un nuevo proveedor
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public async Task<AddProviderInfoDTO> AddProviderAsync(AddProviderRequest request)
+        {
+            AddProviderInfoDTO result = new AddProviderInfoDTO();
+
+            var repository = UnitOfWork.AsyncRepository<Provider>();
+            Provider NewProvider = new Provider();
+            NewProvider.NIT = request.NIT;
+            NewProvider.Name = request.Name;
+            NewProvider.Email = request.Email;
+            var users = await repository.AddAsync(NewProvider);
+            if (users == null)
+                result.Message = "An error occurred while inserting provider data";
+            var Save = await UnitOfWork.SaveChangesAsync();
+            if (Save == 0)
+                result.Message = "An error occurred while inserting provider data";
+            if (result.Message == null)
+            {
+                result.Success = true;
+                result.Provider = NewProvider;
+            }
+            return result;
+        }
+
     }
 }

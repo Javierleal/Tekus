@@ -46,18 +46,15 @@ namespace API.Services.Users
         /// <returns></returns>
         public async Task<UserInfoDTO> AutenticateDataBaseAsync(AuthenticateRequest request)
         {
-            //var repository = UnitOfWork.AsyncRepository<User>();
-            //var users = await repository
-            //    .ListAsync(_ => _.UserName.Equals(request.Username) && _.Password.Equals(request.Password));
-            var userDTOs = new UserInfoDTO();
-            userDTOs.Id = 1;
-            userDTOs.UserName = "JLEAL";
-            //var userDTOs = users.Select(_ => new UserInfoDTO()
-            //{
-            //    Id = _.Id,
-            //    UserName = _.UserName
-            //})
-            //.ToList().FirstOrDefault();
+            var repository = UnitOfWork.AsyncRepository<User>();
+            var users = await repository.ListAsync(null);
+            users.Where(_ => _.UserName.Equals(request.Username) && _.Password.Equals(request.Password));
+            var userDTOs = users.Select(_ => new UserInfoDTO()
+            {
+                Id = _.Id,
+                UserName = _.UserName,
+            })
+            .ToList().FirstOrDefault();
 
             return userDTOs;
         }

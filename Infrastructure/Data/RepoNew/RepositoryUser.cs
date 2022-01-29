@@ -8,40 +8,40 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace Infrastructure.Data.Repositories
+namespace Infrastructure.Data.RepoNew
 {
-    public class RepositoryBase<T> : IAsyncRepository<T> where T : BaseEntity
+    public class RepositoryUser  : BaseEntity
     {
-        private readonly DbSet<T> _dbSet;
+        private readonly DbSet<User> _dbSet;
 
-        public RepositoryBase(EFContext dbContext)
+        public RepositoryUser(EFContext dbContext)
         {
-            _dbSet = dbContext.Set<T>();
+            _dbSet = dbContext.Set<User>();
         }
 
-        public async Task<T> AddAsync(T entity)
+        public async Task<User> AddAsync(User entity)
         {
             await _dbSet.AddAsync(entity);
             return entity;
         }
 
-        public Task<bool> DeleteAsync(T entity)
+        public Task<bool> DeleteAsync(User entity)
         {
             _dbSet.Remove(entity);
             return Task.FromResult(true);
         }
 
-        public Task<T> GetAsync(Expression<Func<T, bool>> expression)
+        public Task<User> GetAsync(Expression<Func<User, bool>> expression)
         {
             return _dbSet.FirstOrDefaultAsync(expression);
         }
 
-        public Task<List<T>> ListAsync(Expression<Func<T, bool>> expression)
+        public Task<List<User>> ListAsync(Expression<Func<User, bool>> expression)
         {
-            return _dbSet.ToListAsync();
+            return _dbSet.Where(expression).ToListAsync();
         }
 
-        public Task<T> UpdateAsync(T entity)
+        public Task<User> UpdateAsync(User entity)
         {
             _dbSet.Update(entity);
             return Task.FromResult(entity);

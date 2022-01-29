@@ -18,8 +18,7 @@ namespace API.Controllers
         private readonly ProviderService _service;
         private readonly ILogger<ProviderController> _logger;
 
-        public ProviderController(ILogger<ProviderController> logger
-            , ProviderService service)
+        public ProviderController(ILogger<ProviderController> logger, ProviderService service)
         {
             _service = service;
             _logger = logger;
@@ -30,6 +29,14 @@ namespace API.Controllers
         public async Task<IActionResult> Get([FromQuery] GetProviderRequest request)
         {
             var users = await _service.SearchAsync(request);
+            return Ok(users);
+        }
+
+        //[Authorize]
+        [HttpPost]
+        public async Task<IActionResult> Post([FromQuery] AddProviderRequest request)
+        {
+            var users = await _service.AddProviderAsync(request);
             return Ok(users);
         }
     }
