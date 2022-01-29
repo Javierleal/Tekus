@@ -32,7 +32,7 @@ namespace API.Controllers
             return Ok(users);
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Post([FromQuery] AddProviderRequest request)
         {

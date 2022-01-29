@@ -52,12 +52,16 @@ namespace API.Services.Providers
         public async Task<AddProviderInfoDTO> AddProviderAsync(AddProviderRequest request)
         {
             AddProviderInfoDTO result = new AddProviderInfoDTO();
-
             var repository = UnitOfWork.AsyncRepository<Provider>();
+
             Provider NewProvider = new Provider();
             NewProvider.NIT = request.NIT;
             NewProvider.Name = request.Name;
             NewProvider.Email = request.Email;
+            //Validaciones
+            var ValidData = NewProvider.Validate();
+            if (ValidData.Count() > 0)
+                result.Message = ValidData.FirstOrDefault().ErrorMessage;
             var users = await repository.AddAsync(NewProvider);
             if (users == null)
                 result.Message = "An error occurred while inserting provider data";
