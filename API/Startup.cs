@@ -30,9 +30,12 @@ namespace API
             services
                 .AddDatabase(Configuration)
                 .AddUnitOfWork()
-                .AddBusinessServices();
+                .AddUserServices()
+                .AddProviderServices();
+
             var jwtTokenConfig = Configuration.GetSection("jwtTokenConfig").Get<JwtTokenConfig>();
             services.AddSingleton(jwtTokenConfig);
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

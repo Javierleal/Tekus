@@ -15,6 +15,8 @@ namespace Infrastructure.Data.Repositories
 
         public RepositoryBase(EFContext dbContext)
         {
+            var result = dbContext.Database.CanConnect();
+
             _dbSet = dbContext.Set<T>();
         }
 

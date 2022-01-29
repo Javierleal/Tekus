@@ -1,4 +1,5 @@
-﻿using API.Services.Users;
+﻿using API.Services.Providers;
+using API.Services.Users;
 using Domain.Interfaces;
 using Domain.Users;
 using Infrastructure.Data;
@@ -25,11 +26,16 @@ namespace API.Extensions
                      options.UseSqlServer(configuration.GetConnectionString("DDDConnectionString")));
         }
 
-        public static IServiceCollection AddBusinessServices(this IServiceCollection services
-           )
+        public static IServiceCollection AddUserServices(this IServiceCollection services)
         {
             return services
                 .AddScoped<UserService>();
+        }
+
+        public static IServiceCollection AddProviderServices(this IServiceCollection services)
+        {
+            return services
+                .AddScoped<ProviderService>();
         }
     }
 }
