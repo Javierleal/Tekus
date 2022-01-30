@@ -1,9 +1,7 @@
 ﻿namespace API.DTOs.Providers
 {
-    public class AddProviderRequest
+    public class UpdateProviderRequest
     {
-
-        public string NIT { get; set; }
 
         public string Name { get; set; }
 

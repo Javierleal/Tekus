@@ -1,6 +1,6 @@
 ﻿namespace API.DTOs.Providers
 {
-    public class GetProviderRequest
+    public class GetProviderServiceRequest
     {
         public string Search { get; set; }
         public int Page { get; set; }

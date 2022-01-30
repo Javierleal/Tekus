@@ -1,4 +1,5 @@
 ﻿using API.Services.Providers;
+using API.Services.Services;
 using API.Services.Users;
 using Domain.Interfaces;
 using Domain.Users;
@@ -35,7 +36,8 @@ namespace API.Extensions
         public static IServiceCollection AddProviderServices(this IServiceCollection services)
         {
             return services
-                .AddScoped<ProviderService>();
+                .AddScoped<ProviderService>()
+                .AddScoped<ServiceService>();
         }
     }
 }

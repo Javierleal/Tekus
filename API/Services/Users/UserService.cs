@@ -48,7 +48,7 @@ namespace API.Services.Users
         {
             var repository = UnitOfWork.AsyncRepository<User>();
             var users = await repository.ListAsync(null);
-            users.Where(_ => _.UserName.Equals(request.Username) && _.Password.Equals(request.Password));
+            users.Where(_ => _.UserName.Equals(request.Username.ToLower()) && _.Password.Equals(request.Password));
             var userDTOs = users.Select(_ => new UserInfoDTO()
             {
                 Id = _.Id,
@@ -66,10 +66,12 @@ namespace API.Services.Users
         /// <returns></returns>
         public async Task<List<UserInfoDTO>> SearchAsync(GetUserRequest request)
         {
+            List<User> users = new List<User>();
             var repository = UnitOfWork.AsyncRepository<User>();
-            var users = await repository
-                .ListAsync(_ => _.UserName.Contains(request.Search));
-
+            if (request.Search == null)
+                users = await repository.ListAsync(null);
+            else
+                users = await repository.ListAsync(_ => _.UserName.Contains(request.Search));
             var userDTOs = users.Select(_ => new UserInfoDTO()
             {
                 Id = _.Id,

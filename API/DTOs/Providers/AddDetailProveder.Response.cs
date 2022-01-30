@@ -1,13 +1,13 @@
-﻿using Domain.Providers;
+﻿using Domain.ProviderDetails;
 
 namespace API.DTOs.Providers
 {
-    public class AddProviderInfoDTO
+    public class AddDetailProviderInfoDTO
     {
         public string Message { get; set; }
 
         public bool Success { get; set; }
 
-        public Provider Provider { get; set; }
+        public ProviderDetail ServiceDetail { get; set; }
     }
 }

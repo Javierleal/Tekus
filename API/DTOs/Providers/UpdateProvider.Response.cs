@@ -1,8 +1,9 @@
 ﻿using Domain.Providers;
+using System;
 
 namespace API.DTOs.Providers
 {
-    public class AddProviderInfoDTO
+    public class UpdateProviderInfoDTO
     {
         public string Message { get; set; }
 

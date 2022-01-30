@@ -38,6 +38,11 @@ namespace Infrastructure.Data.Repositories
 
         public Task<List<T>> ListAsync(Expression<Func<T, bool>> expression)
         {
+            if (expression != null)
+            {
+                if (expression.Parameters.Count > 0)
+                    return _dbSet.Where(expression).ToListAsync();    
+            }
             return _dbSet.ToListAsync();
         }
 
