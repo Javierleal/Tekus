@@ -2,15 +2,13 @@
 {
     public class AuthenticateResponse
     {
-        public AuthenticateResponse(UserInfoDTO user, string token)
+        public AuthenticateResponse()
         {
-            Id = user.Id;
-            Username = user.UserName;
-            Token = token;
         }
 
-        public int Id { get; set; }
-        public string Username { get; set; }
+        public bool Success { get; set; }
+        public string Message { get; set; }
+        public UserInfoDTO User { get; set; }
         public string Token { get; set; }
 
 

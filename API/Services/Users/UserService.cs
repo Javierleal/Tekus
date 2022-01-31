@@ -25,18 +25,22 @@ namespace API.Services.Users
         /// <returns></returns>
         public async Task<AuthenticateResponse> Authenticate(AuthenticateRequest model, IJwtAuthManager jwtAuthManager)
         {
+            AuthenticateResponse response = new AuthenticateResponse();
             var user = await AutenticateDataBaseAsync(model);
-
-            // return null if user not found
-            if (user == null) return null;
-
+            if (user == null)
+            {
+                response.Message = "User or Password Incorrect";
+                return response;
+            }
             var claims = new[]
-{
+            {
                 new Claim(ClaimTypes.Name,user.UserName)
             };
             var jwtResult = jwtAuthManager.GenerateTokens(user.UserName, claims, DateTime.Now);
-
-            return new AuthenticateResponse(user, jwtResult.AccessToken);
+            response.Success = true;
+            response.User = user;
+            response.Token = jwtResult.AccessToken;
+            return response;
         }
 
         /// <summary>
@@ -47,8 +51,11 @@ namespace API.Services.Users
         public async Task<UserInfoDTO> AutenticateDataBaseAsync(AuthenticateRequest request)
         {
             var repository = UnitOfWork.AsyncRepository<User>();
-            var users = await repository.ListAsync(null);
-            users.Where(_ => _.UserName.Equals(request.Username.ToLower()) && _.Password.Equals(request.Password));
+            var users = await repository.ListAsync(_ => _.UserName.Equals(request.Username.ToLower()) && _.Password.Equals(request.Password));
+            if (users == null)
+            {
+                return null;
+            }
             var userDTOs = users.Select(_ => new UserInfoDTO()
             {
                 Id = _.Id,

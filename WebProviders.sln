@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{045CE860-8987-4361-8FD6-BB5DBC4E10C4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestBack", "TestBack\TestBack.csproj", "{93D9853C-AA16-4D89-976C-E9430CFCE8D0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestBack", "TestBack\TestBack.csproj", "{93D9853C-AA16-4D89-976C-E9430CFCE8D0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WEB", "WEB\WEB.csproj", "{FFAAD98F-FBA0-4DCC-B201-CDA8E65EDFCA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{93D9853C-AA16-4D89-976C-E9430CFCE8D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{93D9853C-AA16-4D89-976C-E9430CFCE8D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{93D9853C-AA16-4D89-976C-E9430CFCE8D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FFAAD98F-FBA0-4DCC-B201-CDA8E65EDFCA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFAAD98F-FBA0-4DCC-B201-CDA8E65EDFCA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFAAD98F-FBA0-4DCC-B201-CDA8E65EDFCA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFAAD98F-FBA0-4DCC-B201-CDA8E65EDFCA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
