@@ -146,7 +146,11 @@ namespace WEB.Helper
 							var buffer = Encoding.UTF8.GetBytes(myContent);
 							var byteContent = new ByteArrayContent(buffer);
 							byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-							var Postresponse = client.PostAsync(uri, byteContent).Result;
+							HttpResponseMessage Postresponse = null;
+                            if (MethodType == Methop.POST)
+								Postresponse = client.PostAsync(uri, byteContent).Result;
+							if (MethodType == Methop.PUT)
+								Postresponse = client.PutAsync(uri, byteContent).Result;
 							if (Postresponse.IsSuccessStatusCode)
 							{
 								string htmlData = await Postresponse.Content.ReadAsStringAsync();

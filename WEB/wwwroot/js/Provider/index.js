@@ -2,7 +2,7 @@
     el: '#Provider',
     data: {
         ListProvider: [],
-        SelectProvider: {},
+        selectprovider: {},
         Search: ""
     },
     methods: {
@@ -39,7 +39,7 @@
                     });
                     //Evento de edicion de rows
                     $('#tableProvider tbody').on('click', '#Edit', function () {
-                        vm.SelectProvider = table.row($(this).parents('tr')).data();
+                        vm.selectprovider = table.row($(this).parents('tr')).data();
                         vm.ModalProvider();
                     });
                 },

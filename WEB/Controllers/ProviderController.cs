@@ -19,6 +19,7 @@ namespace WEB.Controllers
         /// <summary>
         /// Obtener la lista de proveedores.
         /// </summary>
+        /// <param name="search">Busqueda</param>
         /// <param name="page">Numero de pagina</param>
         /// <param name="pagesize">Cantidad de paginas</param>
         /// <returns>ProviderInfoDTO</returns>
