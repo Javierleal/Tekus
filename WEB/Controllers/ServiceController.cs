@@ -39,18 +39,40 @@ namespace WEB.Controllers
         }
 
         /// <summary>
-        /// Actualizar servicio.
+        /// Insertar o Actualizar servicio.
         /// </summary>
         /// <param name="service">Objeto a actualizar</param>
         /// <returns>ProviderInfoDTO</returns>
-        public UpdateServiceInfoDTO UpdateService(Service service)
+        public UpdateServiceInfoDTO SaveService(Service service)
         {
             UpdateServiceInfoDTO resp = new UpdateServiceInfoDTO();
             Dictionary<string, object> Update = new Dictionary<string, object>();
             Update.Add("Name", service.Name);
             Update.Add("Description", service.Description);
             //Iniciar Session.
-            var ResultJson = _Data.GetDataServiceJson(String.Format("services/{0}", service.Id), Update, TempSession.Token, Methop.PUT).Result;
+            string ResultJson = "";
+            if (service.Id == 0)
+                ResultJson = _Data.GetDataServiceJson(String.Format("services"), Update, TempSession.Token, Methop.POST).Result;
+            else
+                ResultJson = _Data.GetDataServiceJson(String.Format("services/{0}", service.Id), Update, TempSession.Token, Methop.PUT).Result;
+            if (ResultJson != "null")
+            {
+                resp = JsonConvert.DeserializeObject<UpdateServiceInfoDTO>(ResultJson);
+                return resp;
+            }
+            return resp;
+        }
+
+        /// <summary>
+        /// Eliminar servicio.
+        /// </summary>
+        /// <param name="service">Objeto a eliminar</param>
+        /// <returns>ProviderInfoDTO</returns>
+        public UpdateServiceInfoDTO DeleteService(Service service)
+        {
+            UpdateServiceInfoDTO resp = new UpdateServiceInfoDTO();
+            //Iniciar Session.
+            var ResultJson = _Data.GetDataServiceJson(String.Format("services/{0}", service.Id), null, TempSession.Token, Methop.DELETE).Result;
             if (ResultJson != "null")
             {
                 resp = JsonConvert.DeserializeObject<UpdateServiceInfoDTO>(ResultJson);

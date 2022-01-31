@@ -2,17 +2,59 @@
     el: '#Provider',
     data: {
         ListProvider: [],
-        selectprovider: {},
-        Search: ""
+        selectprovider: { id: 0, nit: "", name: "", email: "" },
+        Search: "",
+        datatable: "#tableProvider",
+        modalprovider: "#EditProviderModal"
     },
     methods: {
+        NewProvider: function () {
+            this.selectprovider.id = 0;
+            this.selectprovider.nit = "";
+            this.selectprovider.name = "";
+            this.selectprovider.email = "";
+            $(vm.modalprovider).modal('show');
+        },
+        DeleteProvider: function () {
+            if (window.confirm("confirm you want to delete the provider: '" + this.selectprovider.name + "'?")) {
+                $.ajax({
+                    type: "Post",
+                    url: '/Privider/DeleteProvider',
+                    data: vm.selectservice,
+                    async: "false",
+                    beforeSend: function () {
+
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            vm.GetListProvider();
+                            vm.CloseModalProvider();
+                        }
+                    }
+                });
+            }
+        },
         SaveProvider: function () {
-            alert(vm.SelectProvider.nit);
+            $.ajax({
+                type: "Post",
+                url: '/Service/SaveService',
+                data: vm.selectservice,
+                async: "false",
+                beforeSend: function () {
+
+                },
+                success: function (response) {
+                    if (response.success) {
+                        vm.GetListProvider();
+                        vm.CloseModalProvider();
+                    }
+                }
+            });
         },
-        ModalProvider: function () {
-            $('#EditProviderModal').modal('show');
+        CloseModalProvider: function () {
+            $(vm.modalprovider).modal('hide');
         },
-        GetListPrivider: function () {
+        GetListProvider: function () {
             $.ajax({
                 type: "Post",
                 url: '/Provider/GetProvider',
@@ -38,23 +80,15 @@
                         }
                     });
                     //Evento de edicion de rows
-                    $('#tableProvider tbody').on('click', '#Edit', function () {
+                    $(vm.datatable + ' tbody').on('click', '#Edit', function () {
                         vm.selectprovider = table.row($(this).parents('tr')).data();
-                        vm.ModalProvider();
+                        $(vm.modalprovider).modal('show');
                     });
-                },
-                complete: function (da) {
-
-
-                },
-                error: function (a, b, c) {
-
-
                 }
             });
         }
     },
     mounted: function () {
-        this.GetListPrivider();
+        this.GetListProvider();
     }
 });

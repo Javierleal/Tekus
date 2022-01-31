@@ -2,6 +2,7 @@
 <div class="container-fluid" id="Services">
     <h1 class="h3 mb-2 text-gray-800">Services</h1>
     <p class="mb-4">Admin Services.</p>
+    <button type="button" class="btn btn-success" v-on:click="NewService">New Service</button>
     <table id="tableService" class="display" style="width:100%">
     </table>
     <div class="modal fade" id="EditServiceModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -9,7 +10,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Service Select</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" v-on:click="CloseModalService">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -17,7 +18,7 @@
                     <form>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Name</label>
-                            <input type="text" class="form-control" v-model="selectservice.name" aria-describedby="nitHelp" placeholder="Enter name">
+                            <input type="text" class="form-control" v-model="selectservice.name" placeholder="Enter name">
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Description</label>
@@ -27,7 +28,7 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="EditProviderModal">Close</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" v-if="selectservice.id != 0" v-on:click="DeleteService">Delete</button>
                     <button type="button" class="btn btn-primary" v-on:click="SaveService">Save changes</button>
                 </div>
             </div>

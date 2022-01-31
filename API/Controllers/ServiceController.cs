@@ -31,7 +31,7 @@ namespace API.Controllers
 
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> Post([FromQuery] AddServiceRequest request)
+        public async Task<IActionResult> Post(AddServiceRequest request)
         {
             var Service = await _service.AddServiceAsync(request);
             return Ok(Service);

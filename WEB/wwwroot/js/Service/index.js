@@ -2,14 +2,41 @@
     el: '#Services',
     data: {
         ListService: [],
-        selectservice: {},
-        Search: ""
+        selectservice: { id: 0, name: "", description:"" },
+        Search: "",
+        datatable: "#tableService",
+        modalservice: "#EditServiceModal"
     },
     methods: {
+        NewService: function () {
+            this.selectservice.id = 0;
+            this.selectservice.name = "";
+            this.selectservice.description = "";
+            $(vm.modalservice).modal('show');
+        },
+        DeleteService: function () {
+            if (window.confirm("confirm you want to delete the service: '" + this.selectservice.name +"'?")) {
+                $.ajax({
+                    type: "Post",
+                    url: '/Service/DeleteService',
+                    data: vm.selectservice,
+                    async: "false",
+                    beforeSend: function () {
+
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            vm.GetListService();
+                            $(vm.modalservice).modal('hide');
+                        }
+                    }
+                });
+            }
+        },
         SaveService: function () {
             $.ajax({
                 type: "Post",
-                url: '/Service/UpdateService',
+                url: '/Service/SaveService',
                 data: vm.selectservice,
                 async: "false",
                 beforeSend: function () {
@@ -17,26 +44,19 @@
                 },
                 success: function (response) {
                     if (response.success) {
-                        $('#tableService').DataTable().clear();
-                        vm.GetListPrivider();
-                        $('#EditServiceModal').modal('close');
+                        vm.GetListService();
+                        $(vm.modalservice).modal('hide');
                     }
-                },
-                complete: function (da) {
-
-
-                },
-                error: function (a, b, c) {
-
-
                 }
             });
         },
-        ModalService: function () {
-            $('#EditServiceModal').modal('show');
+        CloseModalService: function () {
+            $(vm.modalservice).modal('hide');
         },
-        GetListPrivider: function () {
-            
+        GetListService: function () {
+            if ($.fn.DataTable.isDataTable(this.datatable)) {
+                $(this.datatable).dataTable().fnDestroy();
+            }
             $.ajax({
                 type: "Post",
                 url: '/Service/GetService',
@@ -46,8 +66,7 @@
 
                 },
                 success: function (response) {
-                    
-                    var table = $('#tableService').DataTable({
+                    var table = $(vm.datatable).DataTable({
                         data: response.services,
                         columns: [
                             { data: "name", title: "Name" },
@@ -61,24 +80,16 @@
                             return: true
                         }
                     });
-                    //Evento de edicion de rows
-                    $('#tableService tbody').on('click', '#Edit', function () {
+                    //Evento de seleccion de rows
+                    $(vm.datatable +' tbody').on('click', '#Edit', function () {
                         vm.selectservice = table.row($(this).parents('tr')).data();
-                        vm.ModalService();
+                        $(vm.modalservice).modal('show');
                     });
-                },
-                complete: function (da) {
-
-
-                },
-                error: function (a, b, c) {
-
-
                 }
             });
         }
     },
     mounted: function () {
-        this.GetListPrivider();
+        this.GetListService();
     }
 });

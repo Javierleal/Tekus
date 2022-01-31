@@ -2,6 +2,7 @@
 <div class="container-fluid" id="Providers">
     <h1 class="h3 mb-2 text-gray-800">Provider</h1>
     <p class="mb-4">Admin Provider and Add Services or Details.</p>
+    <button type="button" class="btn btn-success" v-on:click="NewProvider">New Provider</button>
     <table id="tableProvider" class="display" style="width:100%">
     </table>
     <div class="modal fade" id="EditProviderModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -9,7 +10,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Provider Select</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" v-on:click="CloseModalProvider">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -32,7 +33,7 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="EditProviderModal">Close</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" v-if="selectprovider.id != 0" v-on:click="DeleteProvider">Delete</button>
                     <button type="button" class="btn btn-primary" v-on:click="SaveProvider">Save changes</button>
                 </div>
             </div>
