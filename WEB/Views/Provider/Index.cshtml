@@ -1,0 +1,44 @@
+﻿<link href="~/lib/DataTables/datatables.min.css" rel="stylesheet">
+<div class="container-fluid" id="Providers">
+    <h1 class="h3 mb-2 text-gray-800">Provider</h1>
+    <p class="mb-4">Admin Provider and Add Services or Details.</p>
+    <table id="tableProvider" class="display" style="width:100%">
+    </table>
+    <div class="modal fade" id="EditProviderModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Provider Select</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">NIT</label>
+                            <input type="text" class="form-control" v-model="SelectProvider.nit" aria-describedby="nitHelp" placeholder="Enter nit">
+                            <small id="nitHelp" class="form-text text-muted">format XXX.XXX.XXX-V.</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Name</label>
+                            <input type="text" class="form-control" v-model="SelectProvider.name"  placeholder="Enter name">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Email</label>
+                            <input type="email" class="form-control" v-model="SelectProvider.email"  placeholder="Enter email">
+                        </div>
+                    </form>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="EditProviderModal">Close</button>
+                    <button type="button" class="btn btn-primary" v-on:click="SaveProvider">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/lib/DataTables/jQuery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="~/lib/DataTables/datatables.min.js"></script>
+<script src="~/js/Provider/index.js" asp-append-version="true"></script>

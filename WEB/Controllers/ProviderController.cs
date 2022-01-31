@@ -10,7 +10,7 @@ namespace WEB.Controllers
 {
     public class ProviderController : BaseController
     {
-        // GET: LoginController
+        // GET: ProviderController
         public ActionResult Index()
         {
             return View();

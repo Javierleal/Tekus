@@ -125,7 +125,7 @@
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="charts.html">
+                <a class="nav-link" href="@Url.Action("Index", "Provider")">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>Providers</span>
                 </a>
@@ -407,17 +407,10 @@
             </div>
         </div>
     </div>
-    <script src="~/lib/jquery/jquery.validate.min.js"></script>
-    <script src="~/lib/validate.js"></script>
-    <!-- Core plugin JavaScript-->
-    <script src="~/lib/jquery-easing/jquery.easing.js"></script>
-    <!-- Bootstrap core JavaScript-->
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- Custom scripts for all pages-->
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
