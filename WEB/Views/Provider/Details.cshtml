@@ -1,0 +1,101 @@
+﻿<link href="~/lib/DataTables/datatables.min.css" rel="stylesheet">
+<div class="container-fluid" id="ProviderDetails">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <div>
+            <h1 class="h3 mb-0 text-gray-800">Services of - <b>{{provider.name}}</b></h1>
+            <p class="mb-4">Services available from this provider.</p>
+        </div>
+        <button type="button" class="btn btn-success d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" v-on:click="NewProviderService"><i class="fas fa-fw fa-plus"></i></button>
+    </div>
+    <table id="tableProviderService" class="display" style="width:100%">
+    </table>
+    <div class="modal fade" id="EditProviderServiceModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel" v-if="selectproviderservice.id == 0">Provider Service New</h5>
+                    <h5 class="modal-title" id="exampleModalLabel" v-else>Edit Provider Service</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" v-on:click="CloseModalProviderDetail">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Service</label>
+                            <select class="form-control" v-model="selectproviderservice.idService">
+                                <option value="0" selected>Select a service</option>
+                                <option v-for="item in listServices" :value="item.id">{{item.name}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Price</label>
+                            <input type="number" class="form-control" v-model="selectproviderservice.priceHour" placeholder="Enter price">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Country</label>
+                            <select class="form-control" v-model="selectproviderservice.countryISO">
+                                <option value="" selected>Select a countri</option>
+                                <option v-for="item in listCountries" :value="item.cca3">{{item.name.common}}</option>
+                            </select>
+                        </div>
+                    </form>
+                    <hr>
+                    <div class="text-center">
+                        <label class="Message" style="color: red;">{{message}}</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" v-if="selectproviderservice.id != 0" v-on:click="DeleteProviderService">Delete</button>
+                    <button type="button" class="btn btn-primary" v-on:click="SaveProviderService">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <div>
+            <h1 class="h3 mb-0 text-gray-800">Additional Detail</b></h1>
+            <p class="mb-4">Provider Additional Values.</p>
+        </div>
+        <button type="button" class="btn btn-success d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" v-on:click="NewProviderDetail"><i class="fas fa-fw fa-plus"></i></button>
+    </div>
+    <table id="tableProviderDetail" class="display" style="width:100%">
+    </table>
+    <div class="modal fade" id="EditProviderDetailModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel" v-if="selectproviderdetail.id == 0">Provider Detail New</h5>
+                    <h5 class="modal-title" id="exampleModalLabel" v-else>Edit Provider Detail</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" v-on:click="CloseModalProviderDetail">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Row Name</label>
+                            <input type="text" class="form-control" v-model="selectproviderdetail.rowName" placeholder="Enter Row Name" v-if="selectproviderdetail.id == 0">
+                             <input type="text" class="form-control" v-model="selectproviderdetail.rowName" placeholder="Enter Row Name" v-else disabled>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Row Value</label>
+                            <input type="text" class="form-control" v-model="selectproviderdetail.rowValue" placeholder="Enter Row Value">
+                        </div>
+                    </form>
+                    <hr>
+                    <div class="text-center">
+                        <label class="Message" style="color: red;">{{message}}</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" v-if="selectproviderdetail.id != 0" v-on:click="DeleteProviderDetail">Delete</button>
+                    <button type="button" class="btn btn-primary" v-on:click="SaveProviderDetail">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/lib/DataTables/jQuery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="~/lib/DataTables/datatables.min.js"></script>
+<script src="~/js/Provider/details.js" asp-append-version="true"></script>

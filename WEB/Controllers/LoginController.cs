@@ -23,6 +23,7 @@ namespace WEB.Controllers
         /// <returns>retorna json con datos de session o inicio de session invalido</returns>
         public AuthenticateResponse Login(string user, string pass)
         {
+            TempSession.Token = "";
             //Iniciar Session.
             var ResultJson = _Data.GetDataServiceJson("users/authenticate", new Dictionary<string, object>() { { "username", user }, { "password", pass } }, "", Methop.POST).Result;
             if (ResultJson != "null")

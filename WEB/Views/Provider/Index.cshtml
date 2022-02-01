@@ -1,15 +1,20 @@
 ﻿<link href="~/lib/DataTables/datatables.min.css" rel="stylesheet">
 <div class="container-fluid" id="Providers">
-    <h1 class="h3 mb-2 text-gray-800">Provider</h1>
-    <p class="mb-4">Admin Provider and Add Services or Details.</p>
-    <button type="button" class="btn btn-success" v-on:click="NewProvider">New Provider</button>
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <div>
+            <h1 class="h3 mb-2 text-gray-800">Provider</h1>
+            <p class="mb-4">Admin Provider and Add Services or Details.</p>
+        </div>
+        <button type="button" class="btn btn-success d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" v-on:click="NewProvider"><i class="fas fa-fw fa-plus"></i></button>
+    </div>
     <table id="tableProvider" class="display" style="width:100%">
     </table>
     <div class="modal fade" id="EditProviderModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Provider Select</h5>
+                    <h5 class="modal-title" id="exampleModalLabel" v-if="selectProvider.id != 0">Provider Select</h5>
+                    <h5 class="modal-title" id="exampleModalLabel" v-if="selectProvider.id == 0">New Provider</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close" v-on:click="CloseModalProvider">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -18,22 +23,24 @@
                     <form>
                         <div class="form-group">
                             <label for="exampleInputEmail1">NIT</label>
-                            <input type="text" class="form-control" v-model="selectprovider.nit" aria-describedby="nitHelp" placeholder="Enter nit">
-                            <small id="nitHelp" class="form-text text-muted">format XXX.XXX.XXX-V.</small>
+                            <input type="text" class="form-control" v-model="selectProvider.nit" placeholder="Enter nit">
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Name</label>
-                            <input type="text" class="form-control" v-model="selectprovider.name"  placeholder="Enter name">
+                            <input type="text" class="form-control" v-model="selectProvider.name" placeholder="Enter name">
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Email</label>
-                            <input type="email" class="form-control" v-model="selectprovider.email"  placeholder="Enter email">
+                            <input type="email" class="form-control" v-model="selectProvider.email" placeholder="Enter email">
                         </div>
                     </form>
-
+                    <hr>
+                    <div class="text-center">
+                        <label class="Message" style="color: red;">{{message}}</label>
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal" v-if="selectprovider.id != 0" v-on:click="DeleteProvider">Delete</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" v-if="selectProvider.id != 0" v-on:click="DeleteProvider">Delete</button>
                     <button type="button" class="btn btn-primary" v-on:click="SaveProvider">Save changes</button>
                 </div>
             </div>

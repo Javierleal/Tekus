@@ -15,6 +15,8 @@ namespace WEB.Controllers
         // GET: ProviderController
         public ActionResult Index()
         {
+            if (TempSession.Token == "")
+                return RedirectToAction("Index", "Login", null);
             return View();
         }
 
@@ -34,6 +36,10 @@ namespace WEB.Controllers
             {
                 resp = JsonConvert.DeserializeObject<ServiceInfoDTO>(ResultJson);
                 return resp;
+            }
+            else
+            {
+                TempSession.Token = "";
             }
             return resp;
         }
@@ -60,6 +66,10 @@ namespace WEB.Controllers
                 resp = JsonConvert.DeserializeObject<UpdateServiceInfoDTO>(ResultJson);
                 return resp;
             }
+            else
+            {
+                TempSession.Token = "";
+            }
             return resp;
         }
 
@@ -77,6 +87,10 @@ namespace WEB.Controllers
             {
                 resp = JsonConvert.DeserializeObject<UpdateServiceInfoDTO>(ResultJson);
                 return resp;
+            }
+            else
+            {
+                TempSession.Token = "";
             }
             return resp;
         }

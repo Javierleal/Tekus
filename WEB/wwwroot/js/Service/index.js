@@ -5,7 +5,8 @@
         selectservice: { id: 0, name: "", description:"" },
         Search: "",
         datatable: "#tableService",
-        modalservice: "#EditServiceModal"
+        modalservice: "#EditServiceModal",
+        message: ""
     },
     methods: {
         NewService: function () {
@@ -28,6 +29,8 @@
                         if (response.success) {
                             vm.GetListService();
                             $(vm.modalservice).modal('hide');
+                        } else {
+                            vm.message = response.message;
                         }
                     }
                 });
@@ -46,6 +49,8 @@
                     if (response.success) {
                         vm.GetListService();
                         $(vm.modalservice).modal('hide');
+                    } else {
+                        vm.message = response.message;
                     }
                 }
             });
@@ -54,9 +59,6 @@
             $(vm.modalservice).modal('hide');
         },
         GetListService: function () {
-            if ($.fn.DataTable.isDataTable(this.datatable)) {
-                $(this.datatable).dataTable().fnDestroy();
-            }
             $.ajax({
                 type: "Post",
                 url: '/Service/GetService',
@@ -66,6 +68,8 @@
 
                 },
                 success: function (response) {
+                    if ($.fn.DataTable.isDataTable(vm.datatable))
+                        $(vm.datatable).dataTable().fnDestroy();
                     var table = $(vm.datatable).DataTable({
                         data: response.services,
                         columns: [

@@ -1,26 +1,27 @@
 ﻿var vm = new Vue({
-    el: '#Provider',
+    el: '#Providers',
     data: {
         ListProvider: [],
-        selectprovider: { id: 0, nit: "", name: "", email: "" },
+        selectProvider: { id: 0, nit: "", name: "", email: "" },
         Search: "",
         datatable: "#tableProvider",
-        modalprovider: "#EditProviderModal"
+        modalprovider: "#EditProviderModal",
+        message: ""
     },
     methods: {
         NewProvider: function () {
-            this.selectprovider.id = 0;
-            this.selectprovider.nit = "";
-            this.selectprovider.name = "";
-            this.selectprovider.email = "";
+            this.selectProvider.id = 0;
+            this.selectProvider.nit = "";
+            this.selectProvider.name = "";
+            this.selectProvider.email = "";
             $(vm.modalprovider).modal('show');
         },
         DeleteProvider: function () {
-            if (window.confirm("confirm you want to delete the provider: '" + this.selectprovider.name + "'?")) {
+            if (window.confirm("confirm you want to delete the provider: '" + this.selectProvider.name + "'?")) {
                 $.ajax({
                     type: "Post",
-                    url: '/Privider/DeleteProvider',
-                    data: vm.selectservice,
+                    url: '/Provider/DeleteProvider',
+                    data: vm.selectProvider,
                     async: "false",
                     beforeSend: function () {
 
@@ -30,6 +31,9 @@
                             vm.GetListProvider();
                             vm.CloseModalProvider();
                         }
+                        else {
+                            vm.message = response.message;
+                        }
                     }
                 });
             }
@@ -37,8 +41,8 @@
         SaveProvider: function () {
             $.ajax({
                 type: "Post",
-                url: '/Service/SaveService',
-                data: vm.selectservice,
+                url: '/Provider/SaveProvider',
+                data: vm.selectProvider,
                 async: "false",
                 beforeSend: function () {
 
@@ -47,6 +51,8 @@
                     if (response.success) {
                         vm.GetListProvider();
                         vm.CloseModalProvider();
+                    } else {
+                        vm.message = response.message;
                     }
                 }
             });
@@ -57,14 +63,16 @@
         GetListProvider: function () {
             $.ajax({
                 type: "Post",
-                url: '/Provider/GetProvider',
-                data: { search: "", page: 1, pagesize : 100 },
+                url: '/Provider/GetProviderList',
+                data: { search: "", page: 1, pagesize: 100 },
                 async: "false",
                 beforeSend: function () {
 
                 },
                 success: function (response) {
-                    var table = $('#tableProvider').DataTable({
+                    if ($.fn.DataTable.isDataTable(vm.datatable))
+                        $(vm.datatable).dataTable().fnDestroy();
+                    var table = $(vm.datatable).DataTable({
                         data: response.providers,
                         columns: [
                             { data: "nit", title: "NIT" },
@@ -74,6 +82,11 @@
                                 "mData": null,
                                 "bSortable": false,
                                 "mRender": function (o) { return '<button type="button" id="Edit" class="btn btn-info"> Edit </button>'; }
+                            },
+                            {
+                                "mData": null,
+                                "bSortable": false,
+                                "mRender": function (o) { return '<button type="button" id="Details" class="btn btn-warning"> Details </button>'; }
                             }
                         ], search: {
                             return: true
@@ -81,8 +94,13 @@
                     });
                     //Evento de edicion de rows
                     $(vm.datatable + ' tbody').on('click', '#Edit', function () {
-                        vm.selectprovider = table.row($(this).parents('tr')).data();
+                        vm.selectProvider = table.row($(this).parents('tr')).data();
                         $(vm.modalprovider).modal('show');
+                    });
+
+                    $(vm.datatable + ' tbody').on('click', '#Details', function () {
+                        vm.selectProvider = table.row($(this).parents('tr')).data();
+                        window.location.href = "/Provider/Details/" + vm.selectProvider.id;
                     });
                 }
             });
