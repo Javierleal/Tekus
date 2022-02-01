@@ -24,6 +24,17 @@ namespace API.Services.Providers
         }
 
         /// <summary>
+        /// Obtener un proveedor
+        /// </summary>
+        /// <param name="id">Identificador del proveedor</param>
+        /// <returns>Objeto de un proveedor</returns>
+        public async Task<Provider> GetProviderAsync(int id)
+        {
+            var repository = UnitOfWork.AsyncRepository<Provider>();
+            return await repository.GetAsync(_ => _.Id.Equals(id));
+        }
+
+        /// <summary>
         /// Obtener lista de proveedores
         /// </summary>
         /// <param name="request">Parametros de busqueda y paginación</param>
@@ -210,6 +221,7 @@ namespace API.Services.Providers
                     IDService = item.IDService,
                     ServiceName = Service.Name,
                     CountryISO = item.CountryISO,
+                    PriceHour = item.PriceHour,
                     CountryName = await item.CountryISO.CountryNameByISO()
                 });
             }

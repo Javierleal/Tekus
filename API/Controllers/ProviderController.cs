@@ -21,6 +21,21 @@ namespace API.Controllers
         }
 
         /// <summary>
+        /// Obtener datos de un proveedor
+        /// </summary>
+        /// <param name="id">Identificador del proveedor</param>
+        /// <returns>Objeto de un proveedor</returns>
+        /// <response code="200">Ok</response>
+        /// <response code="401">Indica el usuario no esta autorizado</response>
+        [Authorize]
+        [HttpGet("{id:int}")]
+        public async Task<IActionResult> Get(int id)
+        {
+            var providers = await _service.GetProviderAsync(id);
+            return Ok(providers);
+        }
+
+        /// <summary>
         /// Obtener lista de proveedores
         /// </summary>
         /// <param name="request">Parametros de busqueda y paginación</param>
@@ -44,7 +59,7 @@ namespace API.Controllers
         /// <response code="401">Indica el usuario no esta autorizado</response>
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> Post([FromQuery] AddProviderRequest request)
+        public async Task<IActionResult> Post(AddProviderRequest request)
         {
             var provider = await _service.AddProviderAsync(request);
             return Ok(provider);
@@ -109,7 +124,7 @@ namespace API.Controllers
         [Authorize]
         [HttpPost]
         [Route("{id}/services")]
-        public async Task<IActionResult> PostServices(int id, [FromQuery] AddServiceProviderRequest request)
+        public async Task<IActionResult> PostServices(int id, AddServiceProviderRequest request)
         {
             var providers = await _service.AddServiceProviderAsync(id, request);
             return Ok(providers);
@@ -126,7 +141,7 @@ namespace API.Controllers
         [Authorize]
         [HttpPut]
         [Route("services/{id}")]
-        public async Task<IActionResult> PutServices(int id, [FromQuery] UpdateServiceProviderRequest request)
+        public async Task<IActionResult> PutServices(int id, UpdateServiceProviderRequest request)
         {
             var providers = await _service.UpdateServiceProviderAsync(id, request);
             return Ok(providers);
@@ -176,7 +191,7 @@ namespace API.Controllers
         [Authorize]
         [HttpPost]
         [Route("{id}/details")]
-        public async Task<IActionResult> PostDetails(int id, [FromQuery] AddDetailProviderRequest request)
+        public async Task<IActionResult> PostDetails(int id, AddDetailProviderRequest request)
         {
             var providers = await _service.AddDetailProviderAsync(id, request);
             return Ok(providers);
@@ -193,7 +208,7 @@ namespace API.Controllers
         [Authorize]
         [HttpPut]
         [Route("details/{id}")]
-        public async Task<IActionResult> PutDetails(int id, [FromQuery] UpdateDetailProviderRequest request)
+        public async Task<IActionResult> PutDetails(int id, UpdateDetailProviderRequest request)
         {
             var providers = await _service.UpdateDetailProviderAsync(id, request);
             return Ok(providers);
