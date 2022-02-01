@@ -65,7 +65,7 @@
             $(vm.modaledit).modal('show');
         },
         DeleteProviderService: function () {
-            if (window.confirm("confirm you want to delete the service provider: '" + this.selectproviderservice.servicename + " Country: " + this.selectproviderservice.countryname + "'?")) {
+            if (window.confirm("confirm you want to delete the service provider: '" + this.selectproviderservice.serviceName + " Country: " + this.selectproviderservice.countryName + "'?")) {
                 $.ajax({
                     type: "Post",
                     url: '/Provider/DeleteProviderService',
@@ -76,8 +76,8 @@
                     },
                     success: function (response) {
                         if (response.success) {
-                            vm.GetListProvider();
-                            vm.CloseModalProvider();
+                            vm.GetListProviderService();
+                            vm.CloseModalProviderDetail();
                         } else {
                             vm.message = response.message;
                         }
@@ -153,7 +153,7 @@
             $(vm.modaleditdetail).modal('show');
         },
         DeleteProviderDetail: function () {
-            if (window.confirm("confirm you want to delete the service provider: '" + this.selectproviderservice.servicename + " Country: " + this.selectproviderservice.countryname + "'?")) {
+            if (window.confirm("confirm you want to delete the Detail provider: '" + this.selectproviderdetail.rowName + "'?")) {
                 $.ajax({
                     type: "Post",
                     url: '/Provider/DeleteProviderDetail',
@@ -164,8 +164,8 @@
                     },
                     success: function (response) {
                         if (response.success) {
-                            vm.GetListProvider();
-                            vm.CloseModalProvider();
+                            vm.GetListProviderDetails();
+                            vm.CloseModalProviderDetail();
                         } else {
                             vm.message = response.message;
                         }

@@ -15,17 +15,13 @@ namespace Infrastructure.Data
         public DbSet<ProviderService> ProviderService { get; set; }
         public DbSet<ProviderDetail> ProviderDetail { get; set; }
 
-        #region Required
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<User>()
-                .Property(b => b.UserName)
-                .IsRequired();
-        }
-        #endregion
         public EFContext(DbContextOptions<EFContext> options) : base(options)
         {
 
+        }
+
+        public EFContext()
+        {
         }
     }
 }

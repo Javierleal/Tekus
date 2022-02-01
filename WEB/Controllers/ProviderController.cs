@@ -188,6 +188,28 @@ namespace WEB.Controllers
             return resp;
         }
 
+        /// <summary>
+        /// Eliminar servicio de provider.
+        /// </summary>
+        /// <param name="providerService">Objeto a eliminar</param>
+        /// <returns>UpdateServiceProviderInfoDTO</returns>
+        public UpdateServiceProviderInfoDTO DeleteProviderService(ProviderService providerService)
+        {
+            UpdateServiceProviderInfoDTO resp = new UpdateServiceProviderInfoDTO();
+            //Iniciar Session.
+            var ResultJson = _Data.GetDataServiceJson(String.Format("providers/services/{0}", providerService.Id), null, TempSession.Token, Methop.DELETE).Result;
+            if (ResultJson != "null")
+            {
+                resp = JsonConvert.DeserializeObject<UpdateServiceProviderInfoDTO>(ResultJson);
+                return resp;
+            }
+            else
+            {
+                TempSession.Token = "";
+            }
+            return resp;
+        }
+
         #endregion
 
         #region Provider Details
@@ -237,6 +259,28 @@ namespace WEB.Controllers
             if (ResultJson != "null")
             {
                 resp = JsonConvert.DeserializeObject<AddDetailProviderInfoDTO>(ResultJson);
+                return resp;
+            }
+            else
+            {
+                TempSession.Token = "";
+            }
+            return resp;
+        }
+
+        /// <summary>
+        /// Eliminar detalle de provider.
+        /// </summary>
+        /// <param name="providerService">Objeto a eliminar</param>
+        /// <returns>UpdateServiceProviderInfoDTO</returns>
+        public UpdateDetailProviderInfoDTO DeleteProviderDetail(ProviderDetail providerService)
+        {
+            UpdateDetailProviderInfoDTO resp = new UpdateDetailProviderInfoDTO();
+            //Iniciar Session.
+            var ResultJson = _Data.GetDataServiceJson(String.Format("providers/details/{0}", providerService.Id), null, TempSession.Token, Methop.DELETE).Result;
+            if (ResultJson != "null")
+            {
+                resp = JsonConvert.DeserializeObject<UpdateDetailProviderInfoDTO>(ResultJson);
                 return resp;
             }
             else

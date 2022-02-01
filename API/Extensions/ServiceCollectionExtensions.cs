@@ -1,4 +1,5 @@
-﻿using API.Services.Providers;
+﻿using API.Services.Dashboard;
+using API.Services.Providers;
 using API.Services.Services;
 using API.Services.Users;
 using Domain.Interfaces;
@@ -37,7 +38,8 @@ namespace API.Extensions
         {
             return services
                 .AddScoped<ProviderService>()
-                .AddScoped<ServiceService>();
+                .AddScoped<ServiceService>()
+                .AddScoped<DashboardService>();
         }
     }
 }
